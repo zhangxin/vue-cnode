@@ -27,3 +27,13 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## 版本
+
+@vue/cli 4.5.12
+
+npm 6.14.12
+
+node v14.16.1
+
+yarn 1.22.5

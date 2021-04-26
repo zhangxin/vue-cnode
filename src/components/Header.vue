@@ -74,9 +74,5 @@ export default {
       }
     }
     
-
-     
-    
-    
   }
 </style>

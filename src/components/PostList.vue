@@ -1,17 +1,21 @@
 <template>
   <div>
+    <!-- 是否正在加载 -->
     <div class="loading" v-if="isLoading">
       <img src="../assets/loading.gif" alt="loading" />
     </div>
-    <div class="topiclist">
+
+    <div v-else class="topiclist">
       <ul>
+        <!-- 第一行 -->
         <li class="toobar">
           <span>全部</span>
           <span>精华</span>
           <span>分享</span>
           <span>问答</span>
           <span>招聘</span>
-      </li> 
+        </li>
+        <!-- 主题列表 -->
         <li
           v-for="topic in topicList"
           :key="topic.id"
@@ -24,17 +28,28 @@
             >/<span class="visit-count">{{ topic.visit_count }}</span>
           </span>
 
-          <span :class="[topicTabClass,{'put-top': (topic.top===true),'put-good':(topic.good) === true}]">
+          <span
+            :class="[
+              topicTabClass,
+              {
+                'put-top': topic.top === true,
+                'put-good': topic.good === true,
+              },
+            ]"
+          >
             {{ topicType(topic) }}
           </span>
 
           <span class="last-replay">{{
             topic.last_reply_at | formatDate
           }}</span>
-          <span class="topic-title">
-            {{ topic.title }}
-          </span>
 
+          <router-link :to="{ name: 'article', params: { id: topic.id } }">
+            <!-- 帖子标题 -->
+            <span class="topic-title">
+              {{ topic.title }}
+            </span>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -47,27 +62,30 @@ export default {
   data() {
     return {
       isLoading: true,
-      topicList: [],
-      topicTabClass: "topiclist-tab"
+      topicList: [], // 关于主题列表的全部数据
+      topicTabClass: "topiclist-tab",
     };
   },
 
   methods: {
+    // 获取数据
     gteDate() {
       this.$http
         .get("https://cnodejs.org/api/v1/topics", {
           params: {
-            limit: 25,
+            limit: 35,
             page: 1,
           },
         })
         .then((res) => {
-          this.isLoading = false;
-          this.topicList = res.data.data;
+          if (res.data.success) {
+            this.isLoading = false;
+            this.topicList = res.data.data;
+          }
         })
         .catch((err) => {
           this.isLoading = true;
-          console.log(err);
+          console.log(err)
         });
     },
 
@@ -88,7 +106,7 @@ export default {
 
   computed: {},
 
-  beforeMount: function () {
+  beforeMount() {
     this.gteDate();
   },
 };
@@ -96,8 +114,6 @@ export default {
 
 <style lang="scss" scoped>
 $topic-list-width: 1180px;
-$loading-height: 400px;
-$loading-width: 100%;
 
 ul,
 li {
@@ -110,7 +126,14 @@ li {
   display: block;
   clear: both;
 }
-
+a {
+  text-decoration: none;
+  padding-bottom: 2px;
+  color: #000;
+}
+a:hover {
+  border-bottom: 1px solid #000;
+}
 
 @media screen and (max-width: 860px) {
   .topic-wrapper {
@@ -163,7 +186,7 @@ li {
   margin-right: auto;
   background-color: #fff;
 
-  .toobar{
+  .toobar {
     padding: 5px;
     border-bottom: 1px solid #f0f0f0;
     line-height: 30px;
@@ -226,8 +249,6 @@ li {
       margin-right: 8px;
     }
 
-    
-
     .topic-title {
       display: inline-block;
       margin-left: 5px;
@@ -248,7 +269,5 @@ li {
       font-size: 12px;
     }
   }
-
- 
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <!-- 是否正在加载 -->
+  <!-- 是否正在加载 -->
+  <div class="topiclist-wrapper">
     <div class="loading" v-if="isLoading">
       <img src="../assets/loading.gif" alt="loading" />
     </div>
@@ -21,7 +21,15 @@
           :key="topic.id"
           class="topic-wrapper clearfix"
         >
-          <img :src="topic.author.avatar_url" alt="用户头像" />
+          <!-- 点击列表头像跳转 -->
+          <router-link
+            :to="{
+              name: 'userinfo',
+              params: { username: topic.author.loginname },
+            }"
+          >
+            <img :src="topic.author.avatar_url" alt="用户头像" />
+          </router-link>
 
           <span class="reply-and-visit">
             <span class="reply-count">{{ topic.reply_count }}</span
@@ -44,7 +52,12 @@
             topic.last_reply_at | formatDate
           }}</span>
 
-          <router-link :to="{ name: 'article', params: { id: topic.id } }">
+          <router-link
+            :to="{
+              name: 'article',
+              params: { id: topic.id, username: topic.author.loginname },
+            }"
+          >
             <!-- 帖子标题 -->
             <span class="topic-title">
               {{ topic.title }}
@@ -85,7 +98,7 @@ export default {
         })
         .catch((err) => {
           this.isLoading = true;
-          console.log(err)
+          console.log(err);
         });
     },
 
@@ -104,8 +117,6 @@ export default {
     },
   },
 
-  computed: {},
-
   beforeMount() {
     this.gteDate();
   },
@@ -113,7 +124,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$topic-list-width: 1180px;
+$topic-list-width: 1380px;
+
+.topiclist-wrapper {
+  padding: 0 30px;
+}
 
 ul,
 li {
@@ -135,35 +150,6 @@ a:hover {
   border-bottom: 1px solid #000;
 }
 
-@media screen and (max-width: 860px) {
-  .topic-wrapper {
-    .topic-title {
-      width: 55%;
-    }
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .topic-wrapper {
-    .topic-title {
-      width: 45%;
-    }
-  }
-}
-@media screen and (max-width: 395px) {
-  .topic-wrapper {
-    .topic-title {
-      width: 40%;
-    }
-  }
-}
-@media screen and (max-width: 360px) {
-  .topic-wrapper {
-    .topic-title {
-      width: 30%;
-    }
-  }
-}
 .loading {
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
@@ -252,7 +238,8 @@ a:hover {
     .topic-title {
       display: inline-block;
       margin-left: 5px;
-      max-width: 75%;
+      max-width: 70%;
+      margin-right: 20px;
 
       white-space: nowrap;
       overflow: hidden;
@@ -270,4 +257,72 @@ a:hover {
     }
   }
 }
+@media screen and (max-width: 860px) {
+  .topiclist {
+    .topic-wrapper {
+      .topic-title {
+        max-width: 65%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .topiclist {
+    .topic-wrapper {
+      .topic-title {
+        max-width: 60%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .topiclist-wrapper {
+    padding: 0;
+  }
+}
+@media screen and (max-width: 580px) {
+  .topiclist {
+    .topic-wrapper {
+      .topic-title {
+        max-width: 55%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .topiclist {
+    .topic-wrapper {
+      .topic-title {
+        max-width: 50%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 469px) {
+  .topiclist {
+    .topic-wrapper {
+      .topic-title {
+        max-width: 45%;
+      }
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 425px) {
+
+  .topiclist {
+
+    .topic-wrapper {
+      .topic-title {
+        max-width: 90%;
+      }
+    }
+  }
+  }
 </style>

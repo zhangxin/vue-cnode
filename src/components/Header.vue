@@ -1,9 +1,13 @@
 <template>
   <div class="header">
     <div class="wrap">
-      <img src="../assets/conde-logo.svg" alt="logo" />
+      <router-link :to="{ name: 'postlist' }">
+        <img src="../assets/conde-logo.svg" alt="logo" />
+      </router-link>
       <ul>
-        <li><a href="#">首页</a></li>
+        <router-link :to="{ name: 'postlist' }">
+          <li>首页</li>
+        </router-link>
         <li><a href="#">新手入门</a></li>
         <li><a href="#">API</a></li>
         <li><a href="#">关于</a></li>
@@ -25,7 +29,7 @@ export default {
 $logo-size: 28px;
 $heager-bgc: #444;
 $a-color: #ccc;
-$wrap-width: 1180px;
+$wrap-width: 1600px;
 
 .header {
   background-color: $heager-bgc;
@@ -39,6 +43,10 @@ $wrap-width: 1180px;
     margin-right: auto;
   }
 
+  a {
+    text-decoration: none;
+    color: $a-color;
+  }
   img {
     height: $logo-size;
   }
@@ -52,10 +60,6 @@ $wrap-width: 1180px;
 
     li {
       padding: 0 10px;
-    }
-    a {
-      text-decoration: none;
-      color: $a-color;
     }
   }
 }

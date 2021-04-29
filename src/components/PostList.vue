@@ -16,11 +16,7 @@
           <span>招聘</span>
         </li>
         <!-- 主题列表 -->
-        <li
-          v-for="topic in topicList"
-          :key="topic.id"
-          class="topic-wrapper clearfix"
-        >
+        <li v-for="topic in topicList" :key="topic.id" class="topic-wrapper">
           <!-- 点击列表头像跳转 -->
           <router-link
             :to="{
@@ -48,10 +44,6 @@
             {{ topicType(topic) }}
           </span>
 
-          <span class="last-replay">{{
-            topic.last_reply_at | formatDate
-          }}</span>
-
           <router-link
             :to="{
               name: 'article',
@@ -63,6 +55,9 @@
               {{ topic.title }}
             </span>
           </router-link>
+          <span class="last-replay">{{
+            topic.last_reply_at | formatDate
+          }}</span>
         </li>
       </ul>
     </div>
@@ -136,18 +131,11 @@ li {
   padding: 0;
   list-style: none;
 }
-.clearfix::after {
-  content: "";
-  display: block;
-  clear: both;
-}
+
 a {
   text-decoration: none;
   padding-bottom: 2px;
   color: #000;
-}
-a:hover {
-  border-bottom: 1px solid #000;
 }
 
 .loading {
@@ -184,10 +172,14 @@ a:hover {
     }
   }
   .topic-wrapper {
+    justify-content: flex-start;
     padding: 5px;
     border-bottom: 1px solid #f0f0f0;
     font-family: Helvetica Neue, Luxi Sans, DejaVu Sans, Tahoma,
       Hiragino Sans GB, STHeiti, sans-serif;
+
+    display: flex;
+
     span {
       line-height: 30px;
       vertical-align: middle;
@@ -203,10 +195,12 @@ a:hover {
     }
 
     .reply-and-visit {
-      display: inline-block;
-      width: 68px;
+      // display: inline-block;
+      flex-basis: 65px;
+      flex-shrink: 0;
       color: #9e78c0;
       margin-left: 8px;
+      margin-right: 3px;
 
       .reply-count {
         font-size: 14px;
@@ -218,6 +212,7 @@ a:hover {
     }
 
     .topiclist-tab {
+      flex-shrink: 0;
       background-color: #e5e5e5;
       color: #999;
       padding: 2px 4px;
@@ -235,94 +230,26 @@ a:hover {
       margin-right: 8px;
     }
 
-    .topic-title {
-      display: inline-block;
-      margin-left: 5px;
-      max-width: 70%;
-      margin-right: 20px;
+    a:nth-child(4) {
+      .topic-title {
+        &:hover {
+          border-bottom: 1px solid #999;
+        }
+      }
 
-      white-space: nowrap;
+      flex-grow: 1;
       overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis;
     }
 
     .last-replay {
-      float: right;
-      min-width: 50px;
-
+      flex-basis: 50px;
+      flex-shrink: 0;
       text-align: right;
-      white-space: nowrap;
       color: #778087;
       font-size: 12px;
     }
   }
 }
-@media screen and (max-width: 860px) {
-  .topiclist {
-    .topic-wrapper {
-      .topic-title {
-        max-width: 65%;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 720px) {
-  .topiclist {
-    .topic-wrapper {
-      .topic-title {
-        max-width: 60%;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 680px) {
-  .topiclist-wrapper {
-    padding: 0;
-  }
-}
-@media screen and (max-width: 580px) {
-  .topiclist {
-    .topic-wrapper {
-      .topic-title {
-        max-width: 55%;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 520px) {
-  .topiclist {
-    .topic-wrapper {
-      .topic-title {
-        max-width: 50%;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 469px) {
-  .topiclist {
-    .topic-wrapper {
-      .topic-title {
-        max-width: 45%;
-      }
-    }
-  }
-}
-
-
-
-@media screen and (max-width: 425px) {
-
-  .topiclist {
-
-    .topic-wrapper {
-      .topic-title {
-        max-width: 90%;
-      }
-    }
-  }
-  }
 </style>

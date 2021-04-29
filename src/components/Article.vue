@@ -29,7 +29,14 @@
             class="reply-section"
             :key="reply.id"
           >
-            <img :src="reply.author.avatar_url" alt="头像" />
+            <router-link
+              :to="{
+                name: 'userinfo',
+                params: { username: reply.author.loginname },
+              }"
+            >
+              <img :src="reply.author.avatar_url" alt="头像" />
+            </router-link>
 
             <span class="username">{{ reply.author.loginname }}</span>
             <span> {{ index + 1 }}楼 </span>
@@ -60,6 +67,7 @@ export default {
           if (res.data.success) {
             this.posts = res.data.data;
             this.isLoading = false;
+
           }
         })
         .catch((err) => {
@@ -80,6 +88,11 @@ export default {
       } else if (tag.tab === "share") {
         return "分享";
       }
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.getData();
     },
   },
 
@@ -111,17 +124,18 @@ $topic-width: 1180px;
 
 .article-wrapper {
   margin-top: 10px;
-  padding: 0 15px;
+  padding: 0 8px;
 
+  background-color: #e1e1e1;
   ul,
   li {
     list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .article {
     max-width: $topic-width;
-    margin-left: auto;
-    margin-right: auto;
 
     .topic {
       background-color: #fff;

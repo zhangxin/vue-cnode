@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PostList from '../components/PostList.vue'
 import Article from '../components/Article.vue'
-import UserInfo from '../component/UserInfo.vue'
+import UserInfo from '../components/UserInfo.vue'
+import SideBar from '../components/SideBar.vue'
 
 Vue.use(VueRouter)
 
@@ -17,16 +18,18 @@ const routes = [
 
   {
     name: 'article',
+    // 一个路由传递多个参数
     path: '/topic/:id',
     components: {
-      main: Article
+      main: Article,
+      aside: SideBar
     }
   },
 
   {
     name: 'userinfo',
-    path: '/user/:id',
-    component: {
+    path: '/user/:username',
+    components: {
       main: UserInfo
     }
   }

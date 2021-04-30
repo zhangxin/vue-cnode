@@ -8,12 +8,13 @@
     <div v-else class="topiclist">
       <ul>
         <!-- 第一行 -->
-        <li class="toobar">
-          <span>全部</span>
-          <span>精华</span>
-          <span>分享</span>
-          <span>问答</span>
-          <span>招聘</span>
+        <li class="toobar" @click="changeTab($event)">
+          <span name="all">全部</span>
+          <span name="good">精华</span>
+          <span name="share">分享</span>
+          <span name="ask">问答</span>
+          <span name="job">招聘</span>
+          <span name="dev">客户端测试</span>
         </li>
         <!-- 主题列表 -->
         <li v-for="topic in topicList" :key="topic.id" class="topic-wrapper">
@@ -60,29 +61,36 @@
           }}</span>
         </li>
       </ul>
+      <Pagination @handleList="renderList" ref="Pagination"></Pagination>
     </div>
   </div>
 </template>
 
 <script>
+import Pagination from "./Pagination.vue";
 export default {
   name: "PostList",
+  components: { Pagination },
+
   data() {
     return {
       isLoading: true,
       topicList: [], // 关于主题列表的全部数据
       topicTabClass: "topiclist-tab",
-    };
+      tagName: "all",
+      resetPage: 1,
+    }; 
   },
 
   methods: {
     // 获取数据
-    gteDate() {
+    gteData(page = 1, tab="all") {
       this.$http
         .get("https://cnodejs.org/api/v1/topics", {
           params: {
-            limit: 35,
-            page: 1,
+            limit: 20,
+            page: page,
+            tab: tab,
           },
         })
         .then((res) => {
@@ -108,12 +116,28 @@ export default {
         return "招聘";
       } else if (tag.tab === "share") {
         return "分享";
+      } else if (tag.tab === "dev") {
+        return "测试";
       }
+    },
+
+    // 切换精华 分享等
+    changeTab(e) {
+      const typeName = e.target.getAttribute("name");
+      // 切换类型
+      this.tagName = typeName;
+      this.gteData(1, this.tagName);
+      this.$refs.Pagination.currentPage = 1
+    },
+
+    // 分页
+    renderList(page) {
+      this.gteData(page, this.tagName);
     },
   },
 
   beforeMount() {
-    this.gteDate();
+    this.gteData(1, "all");
   },
 };
 </script>
@@ -169,6 +193,8 @@ a {
       color: #8fbd50;
       background-color: #ccc;
       padding: 3px 8px;
+      cursor: pointer;
+      border-radius: 2px;
     }
   }
   .topic-wrapper {

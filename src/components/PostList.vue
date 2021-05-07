@@ -14,7 +14,7 @@
           <span name="share">分享</span>
           <span name="ask">问答</span>
           <span name="job">招聘</span>
-          <span name="dev">客户端测试</span>
+          <span name="dev">测试</span>
         </li>
         <!-- 主题列表 -->
         <li v-for="topic in topicList" :key="topic.id" class="topic-wrapper">
@@ -25,7 +25,7 @@
               params: { username: topic.author.loginname },
             }"
           >
-            <img :src="topic.author.avatar_url" alt="用户头像" />
+            <img :src="topic.author.avatar_url" alt="头像" />
           </router-link>
 
           <span class="reply-and-visit">
@@ -188,13 +188,19 @@ a {
     padding: 5px;
     border-bottom: 1px solid #f0f0f0;
     line-height: 30px;
+
+    
     span {
-      margin-right: 10px;
+      margin-right: 12px;
       color: #8fbd50;
       background-color: #ccc;
-      padding: 3px 8px;
+      padding: 3px 6px;
       cursor: pointer;
       border-radius: 2px;
+    }
+
+    span:last-of-child {
+      margin-right: 0;
     }
   }
   .topic-wrapper {

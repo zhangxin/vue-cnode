@@ -89,7 +89,6 @@ button {
   color: #778087;
   border-radius: 3px;
   outline: none;
-  height: 21px;
   cursor: pointer;
   padding: 0 2px;
   width: 55px;
@@ -99,6 +98,19 @@ button {
   position: relative;
   bottom: 1px;
   margin: 0 4px;
+}
+
+@media screen and (max-width:880px) {
+  button {
+
+  border-radius: 2px;
+
+  height: 15px;
+  font-size: 12px;
+
+  padding: 0 1px;
+  width: 35px;
+}
 }
 
 </style>

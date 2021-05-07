@@ -1,15 +1,20 @@
 <template>
   <div class="pagination">
     <button @click="changePage(1)" class="pagebtn">首页</button>
-    <button @click="changePage(currentPage - 1)" class="pagebtn" :disabled=disabled>
+    <button
+      @click="changePage(currentPage - 1)"
+      class="pagebtn"
+      :disabled="disabled"
+    >
       上一页
     </button>
     <button v-if="currentPage > 4" class="pagebtn">...</button>
-    <button 
-    v-for="page in pageArray" 
-    :key="page" 
-    @click="changePage(page)"
-    :class="[{active: currentPage === page}, 'pagebtn']">
+    <button
+      v-for="page in pageArray"
+      :key="page"
+      @click="changePage(page)"
+      :class="[{ active: currentPage === page }, 'pagebtn']"
+    >
       {{ page }}
     </button>
     <button class="pagebtn">...</button>
@@ -20,7 +25,7 @@
 <script>
 export default {
   name: "Pagination",
-  props:['resetPage'],
+  props: ["resetPage"],
   data() {
     return {
       currentPage: 1,
@@ -39,25 +44,23 @@ export default {
 
       // 当前为第一页时  上一页按钮禁止点击
       if (this.currentPage === 1) {
-        this.disabled = true
+        this.disabled = true;
       } else {
-        this.disabled = false
+        this.disabled = false;
       }
 
       // 点击首页
       if (page === 1) {
         this.pageArray = [1, 2, 3, 4, 5];
-
       }
 
       if (page == this.pageArray[4]) {
         this.pageArray.shift();
         this.pageArray.splice(4, 0, this.pageArray[3] + 1);
       } else if (page == this.pageArray[0] && page != 1) {
-        this.pageArray.unshift(this.pageArray[0]-1);
+        this.pageArray.unshift(this.pageArray[0] - 1);
         this.pageArray.pop();
       }
-
 
       this.$emit("handleList", this.currentPage);
     },
@@ -66,7 +69,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .active {
   background-color: #8194426e;
 }
@@ -100,17 +102,16 @@ button {
   margin: 0 4px;
 }
 
-@media screen and (max-width:880px) {
+@media screen and (max-width: 880px) {
+  .pagination {
+    padding: 3px 0;
+  }
   button {
+    border-radius: 2px;
 
-  border-radius: 2px;
-
-  height: 20px;
-  font-size: 12px;
-
-  padding: 0 1px;
-  width: 45px;
+    height: 20px;
+    font-size: 12px;
+    padding: 0 1px;
+  }
 }
-}
-
 </style>

@@ -216,12 +216,12 @@ a {
     }
 
     img {
+      width: 30px;
       height: 30px;
       vertical-align: middle;
     }
 
     .reply-and-visit {
-      // display: inline-block;
       flex-basis: 65px;
       flex-shrink: 0;
       color: #9e78c0;

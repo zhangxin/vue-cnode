@@ -105,11 +105,11 @@ button {
 
   border-radius: 2px;
 
-  height: 15px;
+  height: 20px;
   font-size: 12px;
 
   padding: 0 1px;
-  width: 35px;
+  width: 45px;
 }
 }
 
